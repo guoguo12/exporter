@@ -100,6 +100,6 @@ for (i = 1; i < lines.length; i++) {
                 + "</td></tr>");
     }
 }
-output = '<table class="table table-striped">' + output.join("") + '</table>';
+output = '<table class="table table-striped table-bordered">' + output.join("") + '</table>';
 return output;
 }
