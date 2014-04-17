@@ -89,20 +89,15 @@ displayCSV = function(csv, numComments) {
 }
 
 tableFromCSV = function(csv) {
-var lines = csv.split("\n"),
-    output = [],
-    i;
-    output.push("<tr><th>"
-                + lines[0].split("\t").join("</th><th>")
-                + "</th></tr>");
-for (i = 1; i < lines.length; i++) {
+  var lines = csv.split('\n');
+  var output = [];
+  output.push("<tr><th>" + lines[0].split("\t").join("</th><th>") + "</th></tr>");
+  for (var i = 1; i < lines.length; i++) {
     var chunks = lines[i].split("\t");
     if (chunks.length > 1) {
-      output.push("<tr><td>"
-                + chunks.join("</td><td>")
-                + "</td></tr>");
+      output.push("<tr><td>" + chunks.join("</td><td>") + "</td></tr>");
     }
-}
-output = '<table class="table table-striped table-bordered">' + output.join("") + '</table>';
-return output;
+  }
+  output = '<table class="table table-striped table-bordered">' + output.join("") + '</table>';
+  return output;
 }
