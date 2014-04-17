@@ -14,7 +14,7 @@ loginButtonClicked = function() {
     } else {
       
     }
-  }, {scope: 'public_profile, basic_info, user_groups, user_friends'});
+  }, {scope: 'public_profile, basic_info, user_groups, user_friends, user_status, friends_photos, friends_status'});
 }
 
 logoutButtonClicked = function() {
@@ -32,12 +32,18 @@ submitLinkButtonClicked = function(event) {
   }
   // Check link validity
   var url = $('#permalink-input').val();
-  var matchdata = url.match(/.*permalink\/([0-9]*)\/.*/);
-  if (!matchdata || matchdata.length <= 1) {
-    showError('Your URL is not valid. Please check your URL and try again.');
+  var node = extractNode(url);
+  if (!node) {
+    showError('Your URL is not valid. Please check your URL and try again.<br><br> \
+               Examples of valid URLs include: \
+               <ul> \
+               <li>https://www.facebook.com/user_name/posts/1234567890<i> ...</i></li> \
+               <li>https://www.facebook.com/groups/group_name/permalink/1234567890<i> ...</i></li> \
+               <li>https://www.facebook.com/photo.php?fbid=1234567890<i> ...</i></li> \
+               </ul>');
     return;
   }
-  var query = '/' + matchdata[1];
+  var query = '/' + node;
   FB.api(query, {access_token: window.accessToken}, function(response) {
     // Check for request failures
     if (!response) {
@@ -45,7 +51,7 @@ submitLinkButtonClicked = function(event) {
       return;
     }
     if (response.error) {
-      showError(response.error.message + '.');
+      showError('Request error: ' + response.error.message);
       return;
     }
     if (!response.comments) {
@@ -59,6 +65,24 @@ submitLinkButtonClicked = function(event) {
     $('#datareview').html('');
     extractCSV(response.comments, 'Name\tComment\tTimestamp\tLikes\n', 0);
   });
+}
+
+extractNode = function(url) {
+  var accepted = /.*(permalink\/([0-9]*)\/|posts\/([0-9]*)|fbid=([0-9]*)).*/i
+  var matchdata = url.match(accepted);
+  if (matchdata) {
+    var node = '';
+    for (var i = 2; i < matchdata.length; i++) {
+      var group = matchdata[i];
+      if (group) {
+        node = group;
+        break;
+      }
+    }
+    return node;
+  } else {
+    return '';
+  }
 }
 
 showError = function(message) {
