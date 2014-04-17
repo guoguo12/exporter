@@ -17,7 +17,8 @@ logoutButtonClicked = function() {
   $('#loginbutton').fadeIn(); 
 }
 
-submitLinkButtonClicked = function() {
+submitLinkButtonClicked = function(event) {
+  event.preventDefault(); // Prevents page redirect
   if (!$('#loginbutton').is(':hidden')) {
     $('#permalink-input-error').hide().html('Please login above to continue.').fadeIn();
     return;
