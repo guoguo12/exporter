@@ -51,7 +51,7 @@ submitLinkButtonClicked = function(event) {
     $('#permalink-submit').text('Working...').prop('disabled', true);
     $('#datainfo').html('<i class="fa fa-cog fa-spin"></i> Gathering data...');
     $('#datareview').html('');
-    extractCSV(node.comments, 'Name\tComment\tTimestamp\tLikes\n', 0);
+    extractCSV(response.comments, 'Name\tComment\tTimestamp\tLikes\n', 0);
   });
 }
 
