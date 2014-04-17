@@ -93,9 +93,12 @@ var lines = csv.split("\n"),
                 + lines[0].split("\t").join("</th><th>")
                 + "</th></tr>");
 for (i = 1; i < lines.length; i++) {
-    output.push("<tr><td>"
-                + lines[i].split("\t").join("</td><td>")
+    var chunks = lines[i].split("\t");
+    if (chunks.length > 1) {
+      output.push("<tr><td>"
+                + chunks.join("</td><td>")
                 + "</td></tr>");
+    }
 }
 output = '<table class="table table-striped">' + output.join("") + '</table>';
 return output;
