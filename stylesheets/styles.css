@@ -1,0 +1,56 @@
+/* Created by Allen Guo */
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+body {
+    font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 14px;    
+    background: url(../background.png) repeat center center fixed; 
+}
+
+h1 {
+    font-size: 44px;
+    text-align: center;
+}
+
+h3 {
+    padding-top: 25px;
+}
+
+#csvdisplay {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 10px;
+    font-family: monospace;
+}
+
+#footer {
+    padding-bottom: 10px;
+    padding-top: 150px;
+    text-align: center;
+    font-size: 12px;
+    width: 100%;
+}
+
+#footer a {
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #2058FF;
+}
+
+table {
+    font-size: 12px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 800px;
+    }
+}
+
+.glyphicon-ok {
+    color: #46a546;
+    padding-right: 10px;
+}
