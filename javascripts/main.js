@@ -31,7 +31,7 @@ submitLinkButtonClicked = function(event) {
       if (response && !response['error']) {
         $('#permalink-input-error').hide();
         $('#permalink-submit').text('Working...').prop('disabled', true);
-        $('#datainfo').html('Gathering data...');
+        $('#datainfo').html('<i class="fa fa-cog fa-spin"></i> Gathering data...');
         $('#datareview').html('');
         processData(response);
       } else {
