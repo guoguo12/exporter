@@ -19,60 +19,59 @@ logoutButtonClicked = function() {
 
 submitLinkButtonClicked = function(event) {
   event.preventDefault(); // Prevents page redirect
+  // Force login
   if (!$('#loginbutton').is(':hidden')) {
-    $('#permalink-input-error').hide().html('Please login above to continue.').fadeIn();
+    showError('Please login above to continue.');
     return;
   }
+  // Check link validity
   var url = $('#permalink-input').val();
   var matchdata = url.match(/.*permalink\/([0-9]*)\/.*/);
-  if (matchdata) {
-    var query = '/' + matchdata[1];
-    FB.api(query, {access_token: window.accessToken}, function(response) {
-      if (response && !response['error']) {
-        $('#permalink-input-error').hide();
-        $('#permalink-submit').text('Working...').prop('disabled', true);
-        $('#datainfo').html('<i class="fa fa-cog fa-spin"></i> Gathering data...');
-        $('#datareview').html('');
-        processData(response);
-      } else {
-        console.log(response);
-        if (response) {
-          if (response['error']) {
-            $('#permalink-input-error').hide().html('Request failed: ' + response['error']['message'] + '.').fadeIn();
-          } else {
-            $('#permalink-input-error').hide().html('An error occurred.').fadeIn();
-          }
-        } else {
-          $('#permalink-input-error').hide().html('No response received from server.').fadeIn();
-        }
-      }
-    });
-  } else {
-    $('#permalink-input-error').hide().fadeIn();
+  if (!matchdata || matchdata.length <= 1) {
+    showError('Your URL is not valid. Please check your URL and try again.');
+    return;
   }
+  var query = '/' + matchdata[1];
+  FB.api(query, {access_token: window.accessToken}, function(response) {
+    // Check for request failures
+    if (!response) {
+      showError('No response received from server.');
+      return;
+    }
+    if (response.error) {
+      showError(response.error.message + '.');
+      return;
+    }
+    if (!response.comments) {
+      showError('This post has no visible comments.');
+      return;
+    }
+    // Request was successful
+    $('#permalink-input-error').hide();
+    $('#permalink-submit').text('Working...').prop('disabled', true);
+    $('#datainfo').html('<i class="fa fa-cog fa-spin"></i> Gathering data...');
+    $('#datareview').html('');
+    extractCSV(node.comments, 'Name\tComment\tTimestamp\tLikes\n', 0);
+  });
 }
 
-processData = function(node) {
-  if (node['comments']) {
-    extractCSV(node['comments'], 'Name\tComment\tTimestamp\tLikes\n', 0);
-  } else {
-    $('#permalink-input-error').hide().html('This post has no visible comments.').fadeIn();
-  }
+showError = function(message) {
+  $('#permalink-input-error').hide().html(message).fadeIn();
 }
 
 extractCSV = function(commentsData, csv, numComments) {
-  var comments = commentsData['data'];
+  var comments = commentsData.data;
   for (var i = 0; i < comments.length; i++) {
     var comment = comments[i];
-    var name = comment['from']['name'];
-    var message = comment['message'].replace(/\n/g, ' ');
-    var timestamp = comment['created_time'];
-    var likes = comment['like_count'];
+    var name = comment.from.name;
+    var message = comment.message.replace(/\n/g, ' ');
+    var timestamp = comment.created_time;
+    var likes = comment.like_count;
     csv += name + '\t' + message + '\t' + timestamp + '\t' + likes + '\n'
     numComments += 1;
   }
   $('#datareview').html('Number of comments processed: ' + numComments);
-  var next = commentsData['paging']['next'];
+  var next = commentsData.paging.next;
   if (next) {
     $.getJSON(next, function(data) {
       extractCSV(data, csv, numComments);
