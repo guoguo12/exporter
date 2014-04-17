@@ -1,3 +1,9 @@
+/**
+ * Facebook Comments Exporter
+ * Creator: Allen Guo
+ * Website: http://guoguo12.github.io/exporter/
+ */
+
 loginButtonClicked = function() {
   FB.login(function(response) {
     if (response.authResponse) {
