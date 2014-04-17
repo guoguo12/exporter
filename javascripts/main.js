@@ -53,7 +53,7 @@ submitLinkButtonClicked = function(event) {
 }
 
 processData = function(node) {
-  if (node['comments']['data']) {
+  if (node['comments']) {
     extractCSV(node['comments'], 'Name\tComment\tTimestamp\tLikes\n', 0);
   } else {
     $('#permalink-input-error').hide().html('This post has no visible comments.').fadeIn();
