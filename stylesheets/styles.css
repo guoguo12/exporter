@@ -13,6 +13,11 @@ body a {
     color: #3B5998;
 }
 
+body a:hover {
+    text-decoration: none;
+    color: #5B79B8;
+}
+
 h1 {
     font-size: 44px;
     text-align: center;
