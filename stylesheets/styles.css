@@ -3,6 +3,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
 
 body {
+    padding-top: 30px;
     font-family: "Open Sans", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     font-size: 14px;    
     background: url(../background.png) repeat center center fixed; 
