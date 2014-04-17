@@ -9,6 +9,10 @@ body {
     background: url(../background.png) repeat center center fixed; 
 }
 
+body a {
+    color: #3B5998;
+}
+
 h1 {
     font-size: 44px;
     text-align: center;
