@@ -1,10 +1,10 @@
 /* Created by Allen Guo */
 
-@import url(http://fonts.googleapis.com/css?family=Nunito);
+@import url(http://fonts.googleapis.com/css?family=Nunito:300);
 
 body {
     padding-top: 30px;
-    font-family: "Nunito", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-family: "Nunito", "Arial", sans-serif;
     font-size: 14px;    
     background: url(../background.png) repeat center center fixed; 
 }
