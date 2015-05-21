@@ -14,7 +14,7 @@ loginButtonClicked = function() {
     } else {
       
     }
-  }, {scope: 'public_profile, basic_info, user_groups, user_friends, user_status, friends_photos, friends_status'});
+  }, {scope: 'public_profile, basic_info, user_groups, user_friends, user_status'});
 }
 
 logoutButtonClicked = function() {
